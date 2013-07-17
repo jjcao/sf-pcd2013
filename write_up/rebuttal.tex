@@ -1,0 +1,181 @@
+\bl{We would like to thank all the reviewers for their thoughtful comments. We shall first make a few points intended for all the reviewers. Responses (colored blue) to individual reviewer comments will follow. In the current revision, included changes are colored red.
+
+One main issue raised by the reviewers is that our work is mostly based on existing work.
+%-
+As stated in Section 1 and 3, the existing Low-Rank Subspace Clustering methods tend to fail when segmenting two or more intersection planes, i.e. when the subspaces are dependent. In this paper, we present a low-rank based framework with prior knowledge for more general subspace clustering. The framework has the potential to be employed in many other computer vision and graphics applications when the subspaces are not independent.
+
+The second common issue is about timing.
+%-
+The time complexity of our algorithm is $O(N\mathrm{log}N + N_{f}\times (S^{*})^{3})$, where $N$ is the number of points and $N_{f}$ is the number of the candidate feature points.
+Solving ~\eq~(\ref{eq:RSSLRR}) is the most time-consuming (the $(S^{*})^{3}$ factor), which can be reduced to $O((S^{*})^{2})$ using the linearized alternating direction approach \cite{LinLS11}.
+We have added Section~\ref{sec:timing} for time complexity analysis and offered a typical timing for
+the Armadillon model with 99.4k points and 8.4k candidate feature points in~\fig~\ref{fig:realObjects}. It takes a total of 4618 seconds using our current Matlab implementation. A parallel C++ implementation with the linearized alternating direction approach could increase the performance remarkably.
+
+The third issue is about more "real-life" examples.
+%-
+We have added a few more real-scan data in~\fig~\ref{fig:realObjects} and~\fig~\ref{fig:shutter}, in which the typical imperfections, such as noise, outliers and non-uniform distribution are ubiquitous.
+Necessary comments are added in Section~\ref{sec:moreResults}.
+%-
+The facade model in Fig. 2 of original manuscript is removed since it takes too much of space.
+
+The last issue is about display.
+%-
+The surfels for sharp features (clipped two disks) [21] may not be a proper approach for display normals before feature edges are extracted. One of the author of [21] refers us to Pointshop3D which is not supported after December 2006. We are studying the code still. In the current revision, we have tried hard to improve the display by adjusting the size of the surfels.
+}
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+
+\noindent
+{\bf Reviewer \#1}
+
+\vspace{10pt}
+
+\noindent
+Comment 1:
+Since computer graphics people seems not to be so familiar with computer vision techniques, thus the numerical method solving the optimization in Equation (6) needs to be briefly explained (if the extra space exists).
+
+\noindent
+\bl{Response: We adapt Alternating Direction Method (ADM) to solve Equation (6) which is detailed in Appendix 1.
+}
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+
+\noindent
+Comment 2: It is better to mention what is the meaning "RNE" and "HF".
+
+\noindent
+\bl{Response: "RNE" means robust normal estimation, and "HF" means hough transform. We have rewrote the first paragraph of Section~\ref{sec:results}.
+}
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+
+\noindent
+Comment 3: "Alexandre" is the first name. The method proposed in [7] is explained two times.
+
+\noindent
+\bl{Response: Corrected. Thank you.
+}
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+
+\noindent
+Comment 4: The same procedure for computing $w_i$ is introduced in Mark Pauly, Markus Gross, Leif Kobbelt, "Efficient Simplification of Point-Sampled Surfaces",IEEE Visualization 2002. In Equation (7), $T->T_i$, and $s->S$.
+
+\noindent
+\bl{Response: We have simplified the introduction of $w_i$ by citing \cite{PaulyKKG03}, and Equation (7) is also removed, see the first paragraph of Section \ref{subsec:candidateFeature}.
+}
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+
+\noindent
+Comment 5: Please provide the reference for "$l_1$-smoothed distribution".
+
+\noindent
+\bl{Response: We have detailed the process in the last paragraph of Section \ref{subsec:candidateFeature}.
+}
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+
+\noindent
+Comment 6: In Section 4.3.2, what is the meaning "edge" ? Is it same as "sharp feature" ?
+
+\noindent
+\bl{Response: They are the same meaning. To avoid unnecessary misleading, we have replaced edge with sharp feature.
+}
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+
+\noindent
+Comment 7: In Equation (8), root mean square is represented as "RMS", but in the other "RSM" is used.
+
+\noindent
+\bl{Response: Corrected.
+}
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+
+\noindent
+Comment 8: Could you explain the reason why the parameters S, S*, K, and r are different in normal estimation and feature extraction ?
+
+\noindent
+\bl{Response: We chose smaller neighborhood just for speeding up the algorithm.
+}
+
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+
+\noindent
+Comment 9: References [6] and [17] are same. The authors and title are missing for [26].
+
+\noindent
+\bl{Response: Corrected.
+}
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+
+\noindent
+{\bf Reviewer \#3}
+
+\vspace{10pt}
+
+\noindent
+Comment 1:
+It is mandatory that all these info are added to the paper.
+For example in the following paper (that probably should be cited) the authors take into account performance in the evaluation of various surface normal estimation methods.
+Klasing, K.; Althoff, D.; Wollherr, D.; Buss, M., "Comparison of surface normal estimation methods for range sensing applications," Robotics and Automation, 2009. ICRA '09. IEEE International Conference on , vol., no., pp.3206,3211, 12-17 May 2009
+
+\noindent
+\bl{Response: These info are provided, as shown in the common concern section above. We also cited the paper because it adds to our related work description by evaluating the performance of various normal estimation methods.
+}
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+
+\noindent
+{\bf Reviewer \#4}
+
+\vspace{10pt}
+
+\noindent
+Comment 1: I didn't have time to completely check all the mathematical details but it seems to be correct. However, a self contained explanation is desirable.
+
+\noindent
+\bl{Response: Many detailed descriptions have been added accordingly. We introduced Sparse subspace clustering and Low-rank subspace clustering in Section \ref{sec:lowrank} before introducing our LRSCPK. The most important merit of LRSCPK is that it handles the subspace clustering problem when the subspaces are dependent which challenges the classical low rank subspace clustering approaches. The guiding matrix provides a constraint such that the representation with the same class is dense and that of different classes is sparse as explained in Section \ref{sec:LRSCPK}. The toy example in Section \ref{sec:toy} also provides an intuitive illustration.
+}
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+\noindent
+Comment 2: Since the theory of low-rank subspace clustering is quite new, I recommend a presentation with more details.
+
+\noindent
+\bl{Response: It is really a challenge to add more about low-rank subspace clustering since 14 pages is the upper limit of SMI paper. Section \ref{sec:subspacesegmentation} and \ref{sec:LRSC} provide necessary introduction about the motivation, model and defect of low-rank subspace clustering. More info can be found in~\cite{DBLP:journals/corr/abs-1010-2955} and ~\cite{DBLP:conf/cvpr/ElhamifarV09}.
+}
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+\noindent
+Comment 3: I recommend  figure 4 to be placed in the introduction. I think that presenting an overview in the beginning of the paper is more attractive. Again, as in the figure 2, figure 4(d) does not give any information.
+
+\noindent
+\bl{Response: We have move it in the introduction. In the figure, (a) is the input model with normal estimated by PCA and (d) is our result which preserving the sharp features better as highlighted by the two green boxes. We also showed the $RMS\_\tau $ of them.
+}
+
+%-------------------------------------------------------------------------
+\vspace{10pt}
+\noindent
+Comment 4: The comparison with other methods must be done carefully. Since there are many parameters to be controlled, the authors should be sure that they are set in the best performance.
+
+\noindent
+\bl{Response: The parameters are carefully tuned according to the descriptions of authors of HF and RNE. We have tried our best to choose them after many times of experiments. The authors of RNE have confirmed the results we computed.
+}

@@ -1,0 +1,101 @@
+\documentclass[preprint,5p,times,twocolumn]{elsarticle}
+
+%\usepackage[toc,page]{appendix}
+\usepackage{hyperref}
+\usepackage[ruled,vlined]{algorithm2e}
+%\usepackage{algorithm2e}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{color}
+\usepackage{multirow}
+%\usepackage{amsfonts}
+%\usepackage{enumerate}
+%\usepackage{algorithm}
+\usepackage{algorithmic}
+\newcommand{\jw}[1]{{\color{cyan}[[JW: #1]]}}
+\newcommand{\jj}[1]{{\color{blue}[[JJ: #1]]}}
+\newcommand{\jz}[1]{{\color{green}[[Jz: #1]]}}
+\newcommand{\jianliu}[1]{{\color{yellow}[[JL: #1]]}}
+\newcommand{\re}[1]{{\color{red} #1 }}
+\newcommand{\bl}[1]{{\color{blue} #1 }}
+
+\newcommand{\etc}{\emph{etc.}}
+\newcommand{\eg}{\emph{e.g.}}
+\newcommand{\etal}{\emph{et al.}}
+\newcommand{\ie}{\emph{i.e. }}
+\newcommand{\vs}{\emph{vs.}}
+\newcommand{\eq}{\emph{Equation}}
+\newcommand{\fig}{Fig.}
+\newcommand{\tab}{Tab.}
+
+\graphicspath{{figures/}}
+
+\journal{Computer \& Graphics}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Point Cloud Normal Estimation via Low-Rank Subspace Clustering}
+\author[label1]{Jie Zhang}
+\author[label1]{Junjie Cao}
+\author[label1]{Xiuping Liu}
+\author[label2]{Jun Wang}
+\author[label1]{Jian Liu}
+\author[label3]{Xiquan Shi}
+\address[label1]{School of Mathematical Sciences, Dalian University of Technology, China}
+\address[label2]{College of Mechanical and Electrical Engineering, Nanjing University of Aeronautics and Astronautics, China}
+\address[label3]{Department of Mathematical Sciences, Delaware State University, USA}
+
+\begin{abstract}
+In this paper, we present a robust normal estimation algorithm based on the low-rank subspace clustering technique. The main idea is based on the observation that compared with the points \emph{around sharp features}, it is relatively easier to obtain accurate normals for the points \emph{within smooth regions}. The points around sharp features and smooth regions are identified by covariance analysis of their neighborhoods. The neighborhood of a point in a smooth region can be well approximated by a plane. For a point around sharp features, some of its neighbors may be in smooth regions. These neighbor points' normals are estimated by principal component analysis, and used as prior knowledge to carry out neighborhood clustering. An unsupervised learning process is designed to represent the prior knowledge as a guiding matrix. Then we segment the anisotropic neighborhood into several isotropic neighborhoods by low-rank subspace clustering with the guiding matrix, and identify a consistent subneighborhood for the current point. Hence the normal of the current point near sharp features is estimated as the normal of a plane fitting the consistent subneighborhood. Our method is capable of estimating normals accurately even in the presence of noise and anisotropic samplings, while preserving sharp features within the original point data. We demonstrate the effectiveness and robustness of the proposed method on a variety of examples.
+
+\end{abstract}
+
+\begin{keyword}
+normal estimation \sep sharp feature preserving \sep low-rank representation \sep subspace clustering
+\end{keyword}
+
+\end{frontmatter}
+
+
+\input{introduction.tex}
+\input{related.tex}
+%\input{overview.tex}
+\input{LRSCPK.tex}
+\input{algorithm.tex}
+\input{result.tex}
+\input{applied.tex}
+\input{conclusion.tex}
+\section*{Acknowledgement}
+The authors would like to thank all the reviewers for their valuable comments.
+%
+This work is partially supported by the National Natural Science Foundation of China (No. 61173102, U0935004, 61173103, 91230103) and the Research Funds for the Central Universities (No. DUT13RC206, DUT13JS04).
+%
+Thanks to Bao Li and Alexandre Boulch for providing the code used for comparison.
+%
+The Armadillon model is courtesy of Andrei Sharf. The models of Box and Shutter are provided by Hui Huang.
+%-------------------------------------------------------------------------
+%\section{References}
+
+\bibliographystyle{elsarticle-num}
+\bibliography{smi_template}
+\input{solve.tex}
+
+%-------------------------------------------------------------------------
+%\newpage
+%
+%\mbox{}
+%\newpage
+%
+%\mbox{}
+%\newpage
+%
+%\begin{center}
+%       \LARGE{Rebuttal}
+%\end{center}
+%\input{rebuttal.tex}
+% \newpage
+
+
+\end{document}

@@ -1,0 +1,52 @@
+\appendix
+\section{Solving of LRSCPK}
+
+
+Alternating Direction Method (ADM) \cite{convergence} is used to solve ~\eq~(\ref{eq:RSSLRR}). First, by introducing two auxiliary variables,~\eq~(\ref{eq:RSSLRR}) can be written as
+\begin{equation}
+\begin{array}{l}
+\label{eq:defineS1}
+min_{Z,E}\|J\|_{*}+\beta\|\mathcal{P}_{\Omega}(L)\|_{1}+\gamma\|E\|_{2,1},\\
+s.t. X=XZ+E, Z=J, Z=L.
+\end{array}
+\end{equation}
+Then the problem can be solved by minimizing the following augmented lagrange function
+\begin{equation}
+\begin{array}{l}
+\label{eq:defineSau}
+\|J\|_{*}+\beta\|\mathcal{P}_{\Omega}(L)\|_{1}+\gamma\|E\|_{2,1}+\langle Y^{B},Z-L\rangle\\
++\langle Y^{A},X-XZ-E\rangle + \langle Y^{C},Z-J\rangle + \frac{\mu}{2}(\\
+\|Z-J\|_{F}^{2}+\|X-XZ-E\|_{F}^{2}+\|Z-L\|_{F}^{2}),
+\end{array}
+\end{equation}
+where $Y^{A}$, $Y^{B}$ and $Y^{C}$ are lagrange multipliers. We outline the procedure of the algorithm in Algorithm \ref{alg:Framwork1}. The closed-form solutions of step 1 and step 4 can be solved via Soft Value Thresholding (SVT) operator \cite{CaiCS10} and the Lemma 3.2 in \cite{LiuLY10}, respectively.
+
+\begin{algorithm}[htb] %算法的开始
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand\algorithmicensure {\textbf{Initialize:} }
+\caption{Solving ~\eq~(\ref{eq:RSSLRR}) by ADM}
+\label{alg:Framwork1} %给算法一个标签，这样方便在文中对算法的引用
+\begin{algorithmic} %这个1 表示每一行都显示数字
+\REQUIRE matrix $\mathbf{X,\Omega}$, parameter $\beta$ and $\gamma$
+\ENSURE $\mathbf{Z=J=L=0}$, $\mathbf{E=0}$,
+$\mathbf{Y}^{A}=\mathbf{Y}^{B}=\mathbf{Y}^{C}=0$, $\mu=10^{-6}$,
+$max_{\mu}=10^{6}$, $\rho=1.1$, $\varepsilon=10^{-8}$. \WHILE{not
+converged}
+\STATE 1. Fix the others and update $\mathbf{J}$\\
+$\mathbf{J}=argmin\frac{1}{\mu}\|\mathbf{J}\|_{*}+\frac{1}{2}\|\mathbf{J}-(\mathbf{Z}+\frac{\mathbf{Y}^{C}}{\mu})\|_{F}^{2}.$
+\STATE 2. Fix the others and update $\mathbf{L}$\\
+$\mathbf{L}=argmin\frac{\beta}{\mu}\|\mathcal{P}_{\Omega}(\mathbf{L})\|_{1}+\frac{1}{2}\|\mathbf{L}-(\mathbf{Z}+\frac{\mathbf{Y}^{B}}{\mu})\|_{F}^{2}.$
+\STATE 3. Fix the others and update $\mathbf{Z}$\\
+$\mathbf{Z}=(2\mathbf{I}+\mathbf{X}^{T}\mathbf{X})^{-1}(\mathbf{X}^{T}(\mathbf{X}-\mathbf{E}+\frac{\mathbf{Y}^{A}}{\mu})+\mathbf{J}+\mathbf{L}-\frac{\mathbf{Y}^{C}}{\mu}-\frac{\mathbf{Y}^{B}}{\mu}).$
+\STATE 4. Fix the others and update $\mathbf{E}$\\
+$\mathbf{E}=argmin\frac{\gamma}{\mu}\|\mathbf{E}\|_{2,1}+\frac{1}{2}\|\mathbf{E}-(\mathbf{X}-\mathbf{XZ}+\frac{\mathbf{Y}^{A}}{\mu})\|_{F}^{2}.$
+\STATE 5. Update the multipliers\\
+$\mathbf{Y}^{A}=\mathbf{Y}^{A}+\mu(\mathbf{X}-\mathbf{XZ}-\mathbf{E})$, $\mathbf{Y}^{B}=\mathbf{Y}^{B}+\mu(\mathbf{Z}-\mathbf{L})$, $\mathbf{Y}^{C}=\mathbf{Y}^{C}+\mu(\mathbf{Z}-\mathbf{J})$.  \STATE 6. Update the parameter $\mu$\\
+ $\mu=min(\rho\mu,max_{\mu})$. \STATE 7. Check the convergence conditions \\
+$\|\mathbf{X}-\mathbf{XZ}-\mathbf{E}\|_{\infty}<\varepsilon$,
+$\|\mathbf{Z}-\mathbf{J}\|_{\infty}<\varepsilon$,
+$\|\mathbf{Z}-\mathbf{L}\|_{\infty}<\varepsilon$.\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+

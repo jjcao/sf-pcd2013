@@ -1,0 +1,23 @@
+%-------------------------------------------------------------------------
+\section{Conclusion}
+Motivated by the observation that the segmentation of the neighborhood of the point near sharp features can be treated as subspace clustering, we propose a novel normal estimation method for point clouds, which is able to preserve sharp features even in the presence of heavy noise.
+%We have proposed a novel method for estimating normals for point clouds that preserves sharp features and that is robust to noise and outliers.
+%
+In order to obtain more stable segmentation, a more general LRR framework for subspace clustering with guidance from prior knowledge is presented. We also design an unsupervised learning process to estimate the guidance from reliable regions for the purpose of normal estimation.
+%
+The experiments exhibit that our method is more resilient to noise than state-of-the-art methods.
+%We have shown that our method is at least as precise and noise-resistant as state-of-the-art methods that preserve sharp features,
+%
+Moreover, it is robust to non-uniform sampling that is a more challenging issue in normal estimation.
+%
+\re{It would also be interesting to apply our guided low-rank subspace clustering framework to more computer vision and computer graphics applications.}
+
+
+\re{As described in Section \ref{sec:algorithm}, our method requires a substantial amount of computation time to solve ~\eq~(\ref{eq:RSSLRR}) at each candidate feature point. In the future, we try to find a more efficient algorithm to solve~\eq~(\ref{eq:RSSLRR}) and design a parallel implementation for our normal estimation method.
+%
+Another future work is to choose the four parameters $S$, $S^{*}$, $K$ and $r$ adaptively according to noise level and sampling density.
+}
+%
+%(the previous version) As future work, it would be interesting to choose the four parameters $S$, $S^{*}$, $K$ and $r$ adaptively according to noise level and sampling density. Another future work may be apply our method to more feature-preserving applications.
+
+%One limitation of our method may be the computational time. It usually takes hours for models with tens of thousands of points in our current Matlab implementation. We plan to accelerate our algorithm from two aspects: strategy of avoiding to segment neighborhood of each candidate feature points and rapid computation method for reducing the computation time.
