@@ -1,0 +1,25 @@
+The code is associated with the following paper:
+
+ "Point Cloud Normal Estimation via Low-Rank Subspace Clustering", Jie Zhang, Junjie Cao, Xiuping Liu, Jun Wang,  Jian Liu, Xiquan Shi
+(Shape Modeling International 2013)
+
+Please cite this paper if you use this code. 
+
+For further information, please contact: jjcao1231@gmail.com
+
+=======================================================================================================================
+
+Run the main.m to estimate the normals of model.
+
+=======================================================================================================================
+Input & Output:
+NOFF
+N 0
+x1 y1 z1 nx1 ny1 nz1
+x2 y2 z2 nx2 ny2 nz2
+...
+xN yN zN nxN nyN nzN
+
+where 'N' is the number of points in the model, 
+'xi, yi, zi' is coordinate of point 'pi' and 'nxi, nyi, nzi' is its normal.
+
