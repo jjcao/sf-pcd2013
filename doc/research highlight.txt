@@ -1,0 +1,4 @@
+1. We present a new low-rank subspace clustering framework with prior knowledge.
+2. An unsupervised learning process is designed to obtain the prior knowledge for normal estimation.
+3. The anisotropic neighborhood of each candidate feature points is segmented into several isotropic subneighborhoods by the framework. 
+4. A consistent subneighborhood is identified and used for accurate normal estimation.
